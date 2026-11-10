@@ -1,59 +1,33 @@
-"""
-RECORD CHECK  -  my version
-===========================
+"""Clean, parse, and report on deliberately messy server records."""
+def parse_line(raw_line):
+    """Normalize a server record and convert its numeric fields."""
+    hostname_part, rest = raw_line.strip().split(",", 1)
+    record = {"hostname": hostname_part.strip().lower()}
+    for field in rest.split(","):
+        key, value = field.split("=", 1)
+        key, value = key.strip().lower(), value.strip()
+        record[key] = float(value) if key in {"used", "total"} else value
+    return record
 
-Name  :
-Lane  :  AI / Cyber / IT      (delete two)
-Date  :
+def status_of(record):
+    """Return status for the server's used and total capacity."""
+    percent = record["used"] / record["total"] * 100
+    return "OVER LIMIT" if percent >= 100 else "WARNING" if percent >= 90 else "OK"
 
-Run it:   python template.py
-
-Work through the numbered sections in order. Each one tells you what it must do.
-Delete these instructions as you replace them with your code.
-"""
-
-# =================================================================== FUNCTIONS
-# 1. Write parse_line(raw_line) that cleans and parses one raw, messy line
-#    into a dict. Handle inconsistent spacing and case - that is the whole
-#    point of this week.
-#
-#    Typical and above: also write status_of(...), shaped for your lane
-#    (e.g. OVER LIMIT / WARNING / OK, or FLAGGED / OK). Give both a
-#    one-line docstring.
-
-# your function(s) go here
-
-
-# ====================================================================== INPUT
-# 2. Your raw, messy records - at least 5, deliberately varied in spacing
-#    and case. Match the shape to your lane:
-#
-#    AI / Data Science : "  Survey_2026 , rating=4 , age=23  "
-#    Cyber Security     : "SRC=10.0.0.5,ATTEMPTS=12,RESULT=FAILED"
-#    IT                  : "  Srv-01 , used=87 , total=100  "
-#
-#    Excellent: save these lines to a file and load them with open() /
-#    a for loop over the file, instead of writing them directly here.
-
-raw_records = []   # replace with your code
-
-
-# =============================================================== PROCESS + OUTPUT
-# 3. Parse and report on every record.
-#
-#    Threshold : parse each record, print the cleaned dict.
-#    Typical   : also call status_of(...) for each, print it alongside.
-#    Excellent : print a one-line summary at the end - how many records,
-#                how many flagged.
-
-for raw_record in raw_records:
-    pass   # replace with your code
-
-
-# ==========================================================================
-# 4. Before you finish:
-#
-#    [ ] Run it against at least 5 genuinely messy raw records
-#    [ ] Run it with a value that will not convert to a number - write the
-#        error down
-#    [ ] Check every function does one job, with a docstring
+raw_records = [
+    "  Srv-01 , used=87 , total=100  ",
+    "SRV-02,USED=120,TOTAL=100",
+    " srv-03, used = 45, total = 100 ",
+    "Srv-04,USED=93, total=100",
+    "  SRV-05 , used=60 , TOTAL=100",
+]
+with open("messy_records.txt", "w", encoding="utf-8") as output:
+    output.write("\n".join(raw_records) + "\n")
+parsed_records = []
+with open("messy_records.txt", encoding="utf-8") as source:
+    for line in source:
+        record = parse_line(line)
+        parsed_records.append(record)
+        print(record, status_of(record))
+flagged = sum(status_of(record) != "OK" for record in parsed_records)
+print(f"Records: {len(parsed_records)}; flagged: {flagged}")
