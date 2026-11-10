@@ -1,6 +1,6 @@
-# BROKEN ON PURPOSE.
-# Run it, read the last line, then fix it.
+# Fixed version.
+# This was intentionally broken to practise debugging.
 
-value = input("Value: ")
+value = int(input("Value: "))
 
 print(value + 1)

@@ -1,9 +1,10 @@
-# BROKEN ON PURPOSE.
-# Run it, read the last line, then fix it.
+# Fixed version.
+# This was intentionally broken to practise debugging.
 
 def check(value, limit):
     status = "OVER LIMIT" if value > limit else "OK"
+    return status
 
-check(87, 100)
+result = check(87, 100)
 
-print(status)
+print(result)

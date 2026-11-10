@@ -1,5 +1,5 @@
-# BROKEN ON PURPOSE.
-# Run it, read the last line, then fix it.
+# Fixed version.
+# This was intentionally broken to practise debugging.
 
 class Record:
     def __init__(self, label, value, limit):
@@ -10,5 +10,6 @@ class Record:
     def status(self):
         return "OVER LIMIT" if self.value > self.limit else "OK"
 
+
 r = Record("R-001", 120.0, 100.0)
-print(status())
+print(r.status())

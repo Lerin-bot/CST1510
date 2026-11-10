@@ -1,6 +1,6 @@
-# BROKEN ON PURPOSE.
-# Run it, read the last line, then fix it.
+# Fixed version.
+# This was intentionally broken to practise debugging.
 
 record_id = "R-004"
 
-print(record_ID)
+print(record_id)

@@ -1,5 +1,5 @@
-# BROKEN ON PURPOSE.
-# Run it, read the last line, then fix it.
+# Fixed version.
+# This was intentionally broken to practise debugging.
 
 def status_of(percent, warning_at):
     if percent >= 100:
@@ -9,4 +9,4 @@ def status_of(percent, warning_at):
     else:
         return "OK"
 
-print(status_of(95))
+print(status_of(95, 90))

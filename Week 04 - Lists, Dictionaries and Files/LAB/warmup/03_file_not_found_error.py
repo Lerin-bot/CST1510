@@ -1,5 +1,5 @@
-# BROKEN ON PURPOSE.
-# Run it, read the last line, then fix it.
+# Fixed version.
+# This was intentionally broken to practise debugging.
 
-with open("records.txt") as f:
+with open("records_sample.txt") as f:
     print(f.read())
